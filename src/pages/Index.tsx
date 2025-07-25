@@ -2,38 +2,180 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [cartCount, setCartCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [sortBy, setSortBy] = useState('popular');
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
 
   const addToCart = () => {
     setCartCount(prev => prev + 1);
   };
 
-  const categories = [
+  const allProducts = [
     {
-      title: 'Петли и навесы',
-      description: 'Качественные петли для мебели',
+      id: 1,
+      title: 'Петля накладная Blum CLIP top BLUMOTION',
+      description: 'Петля с доводчиком для накладных дверей',
       image: '/img/06c5a24b-2d35-4a0c-91ad-adeb176ad464.jpg',
-      price: 'от 250 ₽',
-      popular: true
+      price: 850,
+      category: 'hinges',
+      brand: 'Blum',
+      popular: true,
+      inStock: true,
+      rating: 4.8,
+      reviews: 124,
+      specs: {
+        material: 'Сталь',
+        finish: 'Никелированное покрытие',
+        weight: '45г',
+        opening: '110°'
+      }
     },
     {
-      title: 'Ручки и кнопки',
-      description: 'Современные ручки для шкафов',
+      id: 2,
+      title: 'Ручка-скоба матовый хром 128мм',
+      description: 'Современная ручка для кухонных фасадов',
       image: '/img/22245ba0-893d-48c6-b3ce-301c8f9e259c.jpg',
-      price: 'от 180 ₽',
-      popular: false
+      price: 320,
+      category: 'handles',
+      brand: 'Hafele',
+      popular: false,
+      inStock: true,
+      rating: 4.6,
+      reviews: 89,
+      specs: {
+        material: 'Алюминий',
+        finish: 'Матовый хром',
+        length: '128мм',
+        mounting: 'На винты'
+      }
     },
     {
-      title: 'Крепеж и фурнитура',
-      description: 'Винты, болты, направляющие',
+      id: 3,
+      title: 'Направляющие полного выдвижения 500мм',
+      description: 'Шариковые направляющие с доводчиком',
+      image: '/img/91ac07ba-78cb-436a-af80-65049628ca26.jpg',
+      price: 450,
+      category: 'slides',
+      brand: 'Hettich',
+      popular: true,
+      inStock: true,
+      rating: 4.9,
+      reviews: 201,
+      specs: {
+        material: 'Сталь',
+        length: '500мм',
+        load: '40кг',
+        type: 'Полное выдвижение'
+      }
+    },
+    {
+      id: 4,
+      title: 'Замок мебельный с ключом',
+      description: 'Врезной замок для ящиков и шкафов',
+      image: '/img/5f0e7c78-0f6d-4187-af92-27f71592d04d.jpg',
+      price: 180,
+      category: 'locks',
+      brand: 'FGV',
+      popular: false,
+      inStock: true,
+      rating: 4.4,
+      reviews: 67,
+      specs: {
+        material: 'Латунь',
+        type: 'Врезной',
+        keys: '2 ключа',
+        size: '22x16мм'
+      }
+    },
+    {
+      id: 5,
+      title: 'Крепеж конфирмат 6.4x50мм (50шт)',
+      description: 'Евровинты для сборки мебели',
       image: '/img/cd635416-d6d8-4eb1-a72b-ca6c161a1953.jpg',
-      price: 'от 50 ₽',
-      popular: true
+      price: 120,
+      category: 'fasteners',
+      brand: 'EURO',
+      popular: true,
+      inStock: true,
+      rating: 4.5,
+      reviews: 156,
+      specs: {
+        material: 'Сталь оцинкованная',
+        size: '6.4x50мм',
+        head: 'Под шестигранник',
+        quantity: '50шт'
+      }
+    },
+    {
+      id: 6,
+      title: 'Петля полунакладная с доводчиком',
+      description: 'Петля для полунакладных дверей шкафов',
+      image: '/img/06c5a24b-2d35-4a0c-91ad-adeb176ad464.jpg',
+      price: 690,
+      category: 'hinges',
+      brand: 'Blum',
+      popular: false,
+      inStock: true,
+      rating: 4.7,
+      reviews: 93,
+      specs: {
+        material: 'Сталь',
+        finish: 'Никелированное покрытие',
+        weight: '42г',
+        opening: '107°'
+      }
     }
   ];
+
+  const categories = [
+    { value: 'all', label: 'Все категории' },
+    { value: 'hinges', label: 'Петли и навесы' },
+    { value: 'handles', label: 'Ручки и кнопки' },
+    { value: 'slides', label: 'Направляющие' },
+    { value: 'locks', label: 'Замки' },
+    { value: 'fasteners', label: 'Крепеж' }
+  ];
+
+  const brands = ['Blum', 'Hafele', 'Hettich', 'FGV', 'EURO'];
+
+  const filteredProducts = allProducts.filter(product => {
+    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+    const matchesPrice = product.price >= priceRange.min && product.price <= priceRange.max;
+    const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+    
+    return matchesSearch && matchesCategory && matchesPrice && matchesBrand;
+  }).sort((a, b) => {
+    switch (sortBy) {
+      case 'price-low':
+        return a.price - b.price;
+      case 'price-high':
+        return b.price - a.price;
+      case 'name':
+        return a.title.localeCompare(b.title);
+      case 'rating':
+        return b.rating - a.rating;
+      default: // popular
+        return b.popular ? 1 : -1;
+    }
+  });
+
+  const toggleBrand = (brand: string) => {
+    setSelectedBrands(prev => 
+      prev.includes(brand) 
+        ? prev.filter(b => b !== brand)
+        : [...prev, brand]
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50">
@@ -96,7 +238,7 @@ const Index = () => {
       {/* Features */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center p-6 hover-scale">
               <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name="Award" size={32} className="text-orange-500" />
@@ -113,7 +255,14 @@ const Index = () => {
             </div>
             <div className="text-center p-6 hover-scale">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="Truck" size={32} className="text-green-500" />
+                <Icon name="Package" size={32} className="text-green-500" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Большой выбор</h3>
+              <p className="text-gray-600">Более 1000 наименований фурнитуры в наличии на складе</p>
+            </div>
+            <div className="text-center p-6 hover-scale">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Truck" size={32} className="text-purple-500" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Быстрая доставка</h3>
               <p className="text-gray-600">Доставим заказ по всей России в течение 1-3 рабочих дней</p>
@@ -126,43 +275,221 @@ const Index = () => {
       <section id="catalog" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Популярные категории</h2>
-            <p className="text-xl text-gray-600">Выберите нужную категорию фурнитуры</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Каталог товаров</h2>
+            <p className="text-xl text-gray-600">Широкий ассортимент качественной мебельной фурнитуры</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((category, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover-scale group">
-                <div className="relative">
-                  <img 
-                    src={category.image} 
-                    alt={category.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {category.popular && (
-                    <Badge className="absolute top-4 left-4 bg-orange-500 text-white">
-                      Популярное
-                    </Badge>
-                  )}
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-xl">{category.title}</CardTitle>
-                  <CardDescription>{category.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-orange-500">{category.price}</span>
-                    <Button 
-                      onClick={addToCart}
-                      className="bg-gray-900 hover:bg-gray-800 text-white"
-                    >
-                      <Icon name="Plus" size={16} className="mr-2" />
-                      В корзину
-                    </Button>
+
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Filters Sidebar */}
+            <div className="lg:w-1/4">
+              <Card className="p-6 sticky top-4">
+                <h3 className="text-lg font-semibold mb-4">Фильтры</h3>
+                
+                {/* Search */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Поиск</label>
+                  <div className="relative">
+                    <Icon name="Search" size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <Input
+                      placeholder="Поиск товаров..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10"
+                    />
                   </div>
-                </CardContent>
+                </div>
+
+                {/* Category Filter */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Категория</label>
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat.value} value={cat.value}>
+                          {cat.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Price Range */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Цена, ₽</label>
+                  <div className="flex gap-2">
+                    <Input
+                      type="number"
+                      placeholder="От"
+                      value={priceRange.min}
+                      onChange={(e) => setPriceRange(prev => ({ ...prev, min: Number(e.target.value) }))}
+                    />
+                    <Input
+                      type="number"
+                      placeholder="До"
+                      value={priceRange.max === 10000 ? '' : priceRange.max}
+                      onChange={(e) => setPriceRange(prev => ({ ...prev, max: Number(e.target.value) || 10000 }))}
+                    />
+                  </div>
+                </div>
+
+                {/* Brand Filter */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2">Бренд</label>
+                  <div className="space-y-2">
+                    {brands.map((brand) => (
+                      <div key={brand} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={brand}
+                          checked={selectedBrands.includes(brand)}
+                          onCheckedChange={() => toggleBrand(brand)}
+                        />
+                        <label htmlFor={brand} className="text-sm cursor-pointer">
+                          {brand}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Reset Filters */}
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategory('all');
+                    setPriceRange({ min: 0, max: 10000 });
+                    setSelectedBrands([]);
+                  }}
+                >
+                  <Icon name="RotateCcw" size={16} className="mr-2" />
+                  Сбросить фильтры
+                </Button>
               </Card>
-            ))}
+            </div>
+
+            {/* Products Grid */}
+            <div className="lg:w-3/4">
+              {/* Sort and Results Info */}
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <p className="text-gray-600">
+                  Найдено товаров: <span className="font-semibold">{filteredProducts.length}</span>
+                </p>
+                
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">Сортировать:</span>
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-48">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="popular">По популярности</SelectItem>
+                      <SelectItem value="price-low">Цена: по возрастанию</SelectItem>
+                      <SelectItem value="price-high">Цена: по убыванию</SelectItem>
+                      <SelectItem value="name">По названию</SelectItem>
+                      <SelectItem value="rating">По рейтингу</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Products Grid */}
+              {filteredProducts.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {filteredProducts.map((product) => (
+                    <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover-scale group">
+                      <div className="relative">
+                        <img 
+                          src={product.image} 
+                          alt={product.title}
+                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        {product.popular && (
+                          <Badge className="absolute top-4 left-4 bg-orange-500 text-white">
+                            Популярное
+                          </Badge>
+                        )}
+                        {!product.inStock && (
+                          <Badge className="absolute top-4 right-4 bg-red-500 text-white">
+                            Нет в наличии
+                          </Badge>
+                        )}
+                        
+                        {/* Quick Action Buttons */}
+                        <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button size="sm" variant="secondary" className="w-10 h-10 p-0">
+                            <Icon name="Eye" size={16} />
+                          </Button>
+                          <Button size="sm" variant="secondary" className="w-10 h-10 p-0">
+                            <Icon name="Heart" size={16} />
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <CardHeader className="pb-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <CardTitle className="text-lg leading-tight">{product.title}</CardTitle>
+                          <Badge variant="outline" className="text-xs">
+                            {product.brand}
+                          </Badge>
+                        </div>
+                        <CardDescription className="text-sm">{product.description}</CardDescription>
+                        
+                        {/* Rating */}
+                        <div className="flex items-center gap-2 mt-2">
+                          <div className="flex items-center">
+                            {[...Array(5)].map((_, i) => (
+                              <Icon 
+                                key={i} 
+                                name="Star" 
+                                size={14} 
+                                className={`${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-sm text-gray-600">
+                            {product.rating} ({product.reviews})
+                          </span>
+                        </div>
+                      </CardHeader>
+                      
+                      <CardContent className="pt-0">
+                        {/* Key Specs */}
+                        <div className="text-xs text-gray-600 mb-3 space-y-1">
+                          <div>Материал: {product.specs.material}</div>
+                          {product.specs.finish && <div>Покрытие: {product.specs.finish}</div>}
+                          {product.specs.size && <div>Размер: {product.specs.size}</div>}
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-2xl font-bold text-orange-500">{product.price} ₽</span>
+                            <div className="text-xs text-gray-500">за штуку</div>
+                          </div>
+                          <Button 
+                            onClick={addToCart}
+                            disabled={!product.inStock}
+                            className="bg-gray-900 hover:bg-gray-800 text-white disabled:bg-gray-300"
+                          >
+                            <Icon name="ShoppingCart" size={16} className="mr-2" />
+                            В корзину
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <Icon name="Package" size={64} className="mx-auto text-gray-400 mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-600 mb-2">Товары не найдены</h3>
+                  <p className="text-gray-500">Попробуйте изменить параметры поиска</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -235,8 +562,8 @@ const Index = () => {
               <div className="text-gray-300">довольных клиентов</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-green-400 mb-2">1000+</div>
-              <div className="text-gray-300">товаров в каталоге</div>
+              <div className="text-4xl font-bold text-green-400 mb-2">50+</div>
+              <div className="text-gray-300">брендов в ассортименте</div>
             </div>
           </div>
         </div>
