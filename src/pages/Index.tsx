@@ -271,6 +271,262 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Visualization Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Визуализация фурнитуры</h2>
+            <p className="text-xl text-gray-600">Посмотрите, как устанавливается и работает мебельная фурнитура</p>
+          </div>
+
+          {/* Interactive Demo Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            {/* Hinges Demo */}
+            <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
+              <div className="relative h-64 bg-gradient-to-br from-blue-50 to-blue-100">
+                <img 
+                  src="/img/1f18520a-c58d-4686-8def-b8417df3f9e5.jpg"
+                  alt="Установка петель"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-blue-500 text-white">
+                    <Icon name="Eye" size={14} className="mr-1" />
+                    3D Демо
+                  </Badge>
+                </div>
+                <Button 
+                  className="absolute bottom-4 right-4 bg-white text-gray-900 hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  size="sm"
+                >
+                  <Icon name="Play" size={16} className="mr-2" />
+                  Запустить
+                </Button>
+              </div>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Icon name="Wrench" size={20} className="text-blue-500" />
+                  Петли и навесы
+                </CardTitle>
+                <CardDescription>
+                  Интерактивная демонстрация установки петель на мебель
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Icon name="CheckCircle" size={16} className="text-green-500" />
+                    Пошаговая сборка
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="CheckCircle" size={16} className="text-green-500" />
+                    Настройка доводчика
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="CheckCircle" size={16} className="text-green-500" />
+                    Тестирование работы
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Slides Demo */}
+            <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
+              <div className="relative h-64 bg-gradient-to-br from-orange-50 to-orange-100">
+                <img 
+                  src="/img/5768faa0-2b52-4322-95d2-080f7da27b6b.jpg"
+                  alt="Установка направляющих"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-orange-500 text-white">
+                    <Icon name="Settings" size={14} className="mr-1" />
+                    Инструкция
+                  </Badge>
+                </div>
+                <Button 
+                  className="absolute bottom-4 right-4 bg-white text-gray-900 hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  size="sm"
+                >
+                  <Icon name="Play" size={16} className="mr-2" />
+                  Посмотреть
+                </Button>
+              </div>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Icon name="Move" size={20} className="text-orange-500" />
+                  Направляющие
+                </CardTitle>
+                <CardDescription>
+                  Полный гайд по установке направляющих для ящиков
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Icon name="Ruler" size={16} className="text-blue-500" />
+                    Расчет размеров
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Drill" size={16} className="text-blue-500" />
+                    Монтаж на корпус
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Target" size={16} className="text-blue-500" />
+                    Настройка хода
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Handles Demo */}
+            <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
+              <div className="relative h-64 bg-gradient-to-br from-green-50 to-green-100">
+                <img 
+                  src="/img/96018d55-05c6-49d5-8b58-7bcfbe29a986.jpg"
+                  alt="Установка ручек"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-green-500 text-white">
+                    <Icon name="Layers" size={14} className="mr-1" />
+                    3D Модель
+                  </Badge>
+                </div>
+                <Button 
+                  className="absolute bottom-4 right-4 bg-white text-gray-900 hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  size="sm"
+                >
+                  <Icon name="RotateCw" size={16} className="mr-2" />
+                  Обращать
+                </Button>
+              </div>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Icon name="Grip" size={20} className="text-green-500" />
+                  Ручки и кнопки
+                </CardTitle>
+                <CardDescription>
+                  3D-визуализация установки ручек на фасады
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Icon name="Compass" size={16} className="text-purple-500" />
+                    Разметка отверстий
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Wrench" size={16} className="text-purple-500" />
+                    Сборка фурнитуры
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="CheckCircle2" size={16} className="text-purple-500" />
+                    Проверка качества
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Interactive Tools Section */}
+          <div className="bg-gradient-to-r from-gray-900 to-gray-700 rounded-2xl p-8 text-white">
+            <div className="text-center mb-8">
+              <h3 className="text-3xl font-bold mb-4">Интерактивные инструменты</h3>
+              <p className="text-gray-300 text-lg">Используйте наши калькуляторы для точного подбора фурнитуры</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card className="bg-white/10 backdrop-blur border-white/20 hover:bg-white/20 transition-all duration-300 hover-scale">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon name="Calculator" size={24} className="text-white" />
+                  </div>
+                  <h4 className="font-semibold mb-2">Калькулятор петель</h4>
+                  <p className="text-sm text-gray-300 mb-4">Рассчитать количество петель для вашего шкафа</p>
+                  <Button size="sm" className="bg-blue-500 hover:bg-blue-600">
+                    Открыть
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white/10 backdrop-blur border-white/20 hover:bg-white/20 transition-all duration-300 hover-scale">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon name="Ruler" size={24} className="text-white" />
+                  </div>
+                  <h4 className="font-semibold mb-2">Подбор направляющих</h4>
+                  <p className="text-sm text-gray-300 mb-4">Определить длину направляющих по размерам ящика</p>
+                  <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
+                    Открыть
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white/10 backdrop-blur border-white/20 hover:bg-white/20 transition-all duration-300 hover-scale">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon name="Spacing" size={24} className="text-white" />
+                  </div>
+                  <h4 className="font-semibold mb-2">Разметка ручек</h4>
+                  <p className="text-sm text-gray-300 mb-4">Оптимальное расположение ручек на фасадах</p>
+                  <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                    Открыть
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white/10 backdrop-blur border-white/20 hover:bg-white/20 transition-all duration-300 hover-scale">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon name="Package" size={24} className="text-white" />
+                  </div>
+                  <h4 className="font-semibold mb-2">Комплект крепежа</h4>
+                  <p className="text-sm text-gray-300 mb-4">Подбор необходимого крепежа для сборки мебели</p>
+                  <Button size="sm" className="bg-purple-500 hover:bg-purple-600">
+                    Открыть
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* AR Visualization */}
+          <div className="mt-16 text-center">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+              <div className="max-w-3xl mx-auto">
+                <div className="flex items-center justify-center mb-6">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                    <Icon name="Smartphone" size={32} className="text-white" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="text-2xl font-bold mb-2">AR-визуализация</h3>
+                    <p className="text-blue-100">Посмотрите, как фурнитура будет выглядеть в вашей мебели</p>
+                  </div>
+                </div>
+                <p className="text-lg mb-6">
+                  Используйте камеру смартфона, чтобы увидеть фурнитуру 
+                  на вашей мебели в реальном времени
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button className="bg-white text-blue-600 hover:bg-gray-100" size="lg">
+                    <Icon name="Download" size={20} className="mr-2" />
+                    Скачать приложение
+                  </Button>
+                  <Button variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600" size="lg">
+                    <Icon name="QrCode" size={20} className="mr-2" />
+                    QR-код
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Catalog */}
       <section id="catalog" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
